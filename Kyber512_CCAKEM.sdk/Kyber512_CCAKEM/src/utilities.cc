@@ -7,14 +7,24 @@ XUartLite UartLite; /* Instance of the UartLite Device */
 u8 hex_decode(u8 byte)
 {
   // transform u8 input into 4-bit equivalent hex
+  u8 hex;
   if (byte >= '0' && byte <= '9')
-    byte = byte - '0';
+    hex = byte - '0';
   else if (byte >= 'a' && byte <= 'f')
-    byte = byte - 'a' + 10;
+    hex = byte - 'a' + 10;
   else if (byte >= 'A' && byte <= 'F')
-    byte = byte - 'A' + 10;
+    hex = byte - 'A' + 10;
 
-  return (byte & 0xF);
+  return (hex & 0xF);
+}
+
+u8 read_byte() {
+  u8 read = 0x00;
+
+  read = XUartLite_RecvByte(XPAR_AXI_UARTLITE_0_BASEADDR);
+//  xil_printf("shift: %d\n", 4);
+//  xil_printf("Read: %d, RecvBuffer: %d\n", read, RecvBuffer);
+  return (read);
 }
 
 // Write packets from UART to KYBER512 IP Core BRAMs

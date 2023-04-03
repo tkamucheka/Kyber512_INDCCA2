@@ -107,7 +107,6 @@ u8 set_mode(u32 len)
   //  u8 mode;
 
   // Receive byte from UART
-  // 	status = XUartLite_Recv(&UartLite, &RecvBuffer, len);
   RecvBuffer = XUartLite_RecvByte(XPAR_AXI_UARTLITE_0_BASEADDR);
 
   // If nothing received from UART buffer return early
@@ -123,11 +122,13 @@ u8 set_mode(u32 len)
   else
     *kyberControlRegister = *kyberControlRegister | KYBER_MODE_MASK;
 
+  // DEBUG:
   // xil_printf("Control Register: %08x\r\n", *kyberControlRegister);
 
   // Assert termination byte character sequence and quit
   RecvBuffer = XUartLite_RecvByte(XPAR_AXI_UARTLITE_0_BASEADDR);
-  if (RecvBuffer == '\n')
+
+  if (RecvBuffer == FRAME_BYTE)
     return XST_SUCCESS;
   else
     return XST_FAILURE;

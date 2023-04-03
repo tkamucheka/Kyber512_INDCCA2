@@ -11,6 +11,8 @@
 #include "simple_serial.h"
 #include "utilities.h"
 
+#define FRAME_BYTE 0xA
+
 // Kyber512 base addresses
 #define S00_BASEADDR XPAR_KYBER512_CCAKEM_IP_0_S00_AXI_BASEADDR
 #define S01_BASEADDR XPAR_KYBER512_CCAKEM_IP_0_S01_AXI_BASEADDR
